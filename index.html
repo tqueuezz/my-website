@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Shift Dispatch: 24/7 After-Hours Dispatch for Trades</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom, #0f172a, #1e293b, #0f172a);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #334155;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: #f59e0b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .btn-primary:hover {
+            background: #d97706;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #f59e0b;
+            color: #f59e0b;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 .highlight {
+            color: #f59e0b;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .hero-buttons button {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .benefit-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #475569;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+
+        .benefit-icon {
+            width: 2rem;
+            height: 2rem;
+            color: #f59e0b;
+            margin: 0 auto 0.75rem;
+        }
+
+        .benefit-card p {
+            font-weight: 600;
+        }
+
+        /* Section */
+        section {
+            padding: 5rem 0;
+        }
+
+        section h2 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* Services Section */
+        .services-bg {
+            background: rgba(30, 41, 59, 0.5);
+            border-top: 1px solid #475569;
+            border-bottom: 1px solid #475569;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-card p {
+            color: #cbd5e1;
+        }
+
+        /* Responsive Call Monitoring */
+        .monitoring-content {
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+
+        .monitoring-box {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #475569;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .monitoring-box h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .monitoring-box p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        /* Comparison Table */
+        .comparison-bg {
+            background: rgba(30, 41, 59, 0.5);
+            border-top: 1px solid #475569;
+            border-bottom: 1px solid #475569;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            border-bottom: 1px solid #475569;
+        }
+
+        th {
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        th:last-child {
+            color: #f59e0b;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #475569;
+            color: #cbd5e1;
+        }
+
+        td:last-child {
+            color: #fcd34d;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #f59e0b;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .feature-item h3 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            color: #cbd5e1;
+            font-size: 0.875rem;
+        }
+
+        /* Call Log */
+        .call-log-bg {
+            background: rgba(30, 41, 59, 0.5);
+            border-top: 1px solid #475569;
+            border-bottom: 1px solid #475569;
+        }
+
+        .call-log-box {
+            max-width: 48rem;
+            margin: 0 auto;
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+
+        .call-log-entry {
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+        }
+
+        .call-log-time {
+            color: #f59e0b;
+        }
+
+        .call-log-divider {
+            margin: 2rem 0;
+            padding-top: 2rem;
+            border-top: 1px solid #475569;
+        }
+
+        .call-log-divider p {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .call-log-list {
+            list-style: none;
+            color: #cbd5e1;
+        }
+
+        .call-log-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pricing Section */
+        .pricing-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-intro p {
+            color: #cbd5e1;
+            font-size: 1.125rem;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: #0f172a;
+            border: 2px solid #475569;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: #f59e0b;
+        }
+
+        .pricing-card.popular {
+            border-color: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -0.75rem;
+            left: 1.5rem;
+            background: #f59e0b;
+            color: #0f172a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .pricing-card .subtitle {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price {
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price .amount {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .pricing-price .period {
+            color: #64748b;
+        }
+
+        .pricing-description {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .pricing-features .check {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #f59e0b;
+            flex-shrink: 0;
+        }
+
+        .pricing-card button {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-note {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            color: #0f172a;
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: #0f172a;
+            font-size: 1.125rem;
+            max-width: 42rem;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-section button {
+            background: #0f172a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .cta-section button:hover {
+            background: #1e293b;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            border-top: 1px solid #475569;
+            padding: 3rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #f59e0b;
+        }
+
+        .footer-section p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #475569;
+            padding-top: 2rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 1.875rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.875rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav button {
+                width: 100%;
+            }
+        }
+
+        /* Icons (using Unicode symbols) */
+        .icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            text-align: center;
+            line-height: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">☎</div>
+                <span>Night Shift Dispatch</span>
+            </div>
+            <button class="btn-primary" onclick="window.location.href='https://app.nightshiftdispatch.com/en/billing/stripe/subscription/checkout/session/?purchase_type=package&plan_key=pro&stripe_price_id=price_1SPBXOEfE4J1ZIOg7SD09CmS&billing_cycle=month'">Start 7-Day Trial</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>After-Hours Dispatch for Trades:<br><span class="highlight">Never Miss a High-Ticket Emergency Call Again</span></h1>
+            <p>Night Shift Dispatch is your dedicated, on-call dispatcher. We answer every after-hours call instantly, triage the emergency, and alert your on-call tech within minutes—fully branded as your company.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="window.location.href='https://app.nightshiftdispatch.com/en/billing/stripe/subscription/checkout/session/?purchase_type=package&plan_key=pro&stripe_price_id=price_1SPBXOEfE4J1ZIOg7SD09CmS&billing_cycle=month'">Start Your 7-Day Free Trial Now</button>
+                <button class="btn-secondary" onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">See How It Works</button>
+            </div>
+
+            <!-- Key Benefits -->
+            <div class="benefits">
+                <div class="benefit-card">
+                    <div class="icon benefit-icon">⚠️</div>
+                    <p>Stops Lost Emergency Jobs at 2am</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon benefit-icon">📈</div>
+                    <p>Sends Full Job Details to Your Tech</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon benefit-icon">⏱️</div>
+                    <p>No Call Center, No Overnight Payroll</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-bg">
+        <div class="container">
+            <h2>Replaces the Overnight Receptionist You Can't Afford</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3><span class="icon">☎️</span> 24/7 Call Answering</h3>
+                    <p><strong>No More Missed Voicemails.</strong> Homeowners don't wait till morning. They message the next company that answers first. We make sure that's you.</p>
+                </div>
+                <div class="service-card">
+                    <h3><span class="icon">⚠️</span> Emergency Triage</h3>
+                    <p>Burst pipe, sewage backup, no hot water. Those are not "call you next week" problems. They're "bill me right now" jobs.</p>
+                </div>
+                <div class="service-card">
+                    <h3><span class="icon">📍</span> Job Routing</h3>
+                    <p><strong>Instant Alert to Your Tech.</strong> We send that info directly to your on-call tech so they can call back fast.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsive Call Monitoring -->
+    <section>
+        <div class="container">
+            <h2>Responsive Call Monitoring Service: 24/7 Live Call Answering, Your Brand, Our Team</h2>
+            <div class="monitoring-content">
+                <div class="monitoring-box">
+                    <h3><span class="icon">✓</span> Every Call, Every Time</h3>
+                    <p>Every after-hours call is answered by a trained dispatcher in under 15 seconds — using your exact script, your company name, and your service rules.</p>
+                    <p>We capture complete job details: name, callback number, exact address, problem severity, and critical access notes (gate codes, pets, hazards). Then we route it your way: text your on-call tech, log it in your CRM, or queue for morning.</p>
+                </div>
+
+                <div class="monitoring-box">
+                    <h3>Your Customers Never Know</h3>
+                    <p>Your customers never know they're talking to a third party. It sounds like your front desk because we follow your words exactly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-bg">
+        <div class="container">
+            <h2>How We Compare</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Traditional Service</th>
+                            <th>Night Shift Dispatch</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Generic greeting</td>
+                            <td>Your exact script & company name</td>
+                        </tr>
+                        <tr>
+                            <td>"Someone will call you back"</td>
+                            <td>Tech confirms + ETA given to customer</td>
+                        </tr>
+                        <tr>
+                            <td>Bare-bones notes</td>
+                            <td>Complete intake: address, severity, hazards, access</td>
+                        </tr>
+                        <tr>
+                            <td>English only (or slow transfers)</td>
+                            <td>Bilingual EN/ES + Many more languages, instant</td>
+                        </tr>
+                        <tr>
+                            <td>No escalation logic</td>
+                            <td>Auto-escalates to backup if no response</td>
+                        </tr>
+                        <tr>
+                            <td>No accountability logs</td>
+                            <td>Full timestamp trail of every action</td>
+                        </tr>
+                        <tr>
+                            <td>Messy morning handoff</td>
+                            <td>Clean summary report + CRM sync</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section>
+        <div class="container">
+            <h2>Complete Feature Set</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon feature-icon">✓</div>
+                    <div>
+                        <h3>Bilingual Intake (EN/ES + More)</h3>
+                        <p>Clear questions, repeated confirmations — no miscommunication, no drop-offs.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon feature-icon">✓</div>
+                    <div>
+                        <h3>Complete Job Briefing</h3>
+                        <p>Name, callback, address, severity tag, access notes (gate codes, pets, hazards, electrical concerns).</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon feature-icon">✓</div>
+                    <div>
+                        <h3>Logged Escalation Trail</h3>
+                        <p>Every outreach attempt timestamped with outcome for accountability and clean morning handoff.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon feature-icon">✓</div>
+                    <div>
+                        <h3>Your Script, Word-for-Word</h3>
+                        <p>We answer as your company, quote your policies, follow your triage rules — customers think they reached your office.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon feature-icon">✓</div>
+                    <div>
+                        <h3>Real-Time Emergency Routing</h3>
+                        <p>Urgent calls → on-call tech alerted immediately. Non-urgent → queued for morning.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon feature-icon">✓</div>
+                    <div>
+                        <h3>Morning Summary Report</h3>
+                        <p>Your office gets a clean log of all overnight calls: what happened, who responded, what needs follow-up.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call Log Example -->
+    <section class="call-log-bg">
+        <div class="container">
+            <h2>Real-World Example: Emergency Call Log</h2>
+            <div class="call-log-box">
+                <div class="call-log-entry"><span class="call-log-time">11:47:22 PM</span> — Call received from Lisa Martinez (717-555-8392)</div>
+                <div class="call-log-entry"><span class="call-log-time">11:48:01 PM</span> — Intake complete: burst pipe, basement flooding, 1823 Oak Lane</div>
+                <div class="call-log-entry"><span class="call-log-time">11:48:15 PM</span> — SMS sent to Tech A (Mike - 717-555-0134)</div>
+                <div class="call-log-entry"><span class="call-log-time">11:50:03 PM</span> — No response from Tech A after 2 min</div>
+                <div class="call-log-entry"><span class="call-log-time">11:50:05 PM</span> — SMS + voice call sent to Tech B (Dave - 717-555-7821)</div>
+                <div class="call-log-entry"><span class="call-log-time">11:51:42 PM</span> — Tech B confirmed via SMS: "On my way, ETA 30 min"</div>
+                <div class="call-log-entry"><span class="call-log-time">11:52:10 PM</span> — Customer callback: "Dave will call you in 2 minutes from 717-555-7821"</div>
+
+                <div class="call-log-divider">
+                    <p>Every outreach attempt is documented:</p>
+                    <ul class="call-log-list">
+                        <li>✅ Was the message delivered?</li>
+                        <li>✅ Did the tech open it?</li>
+                        <li>✅ Did they confirm?</li>
+                        <li>⏱️ How long did it take? <span class="call-log-time">97 seconds</span></li>
+                        <li>👤 Who ultimately took the call? <span class="call-log-time">Tech B (Dave)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <div class="container">
+            <h2>Simple, Transparent Pricing</h2>
+            <div class="pricing-intro">
+                <p>Choose the plan that fits your business. Both include a 7-day free trial.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Basic Plan -->
+                <div class="pricing-card">
+                    <h3>AI Lead Agent</h3>
+                    <p class="subtitle">For non-emergency businesses</p>
+                    <div class="pricing-price">
+                        <span class="amount">$199</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <p class="pricing-description">24/7 website chat with custom branding, lead capture, and appointment scheduling. Perfect for cleaners, landscapers, and wellness services.</p>
+                    <ul class="pricing-features">
+                        <li><span class="icon check">✓</span> 50 messages/month</li>
+                        <li><span class="icon check">✓</span> Unlimited Website Embeds</li>
+                        <li><span class="icon check">✓</span> Daily Lead Summary via Email</li>
+                        <li><span class="icon check">✓</span> Basic FAQ Automation</li>
+                        <li><span class="icon check">✓</span> Custom Branding Setup</li>
+                        <li><span class="icon check">✓</span> Appointment Scheduling Support</li>
+                        <li><span class="icon check">✓</span> 24/7 Tech Support</li>
+                    </ul>
+                    <button class="btn-secondary" onclick="window.location.href='https://app.nightshiftdispatch.com/en/billing/stripe/subscription/checkout/session/?purchase_type=package&plan_key=basic&stripe_price_id=price_1SP933EfE4J1ZIOg1WRYptWh&billing_cycle=month'">Start Free Trial</button>
+                    <p class="pricing-note">Discounts for quarterly and yearly plans!</p>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="pricing-card popular">
+                    <div class="pricing-badge">MOST POPULAR</div>
+                    <h3>Live Dispatch Pro</h3>
+                    <p class="subtitle">For emergency trades businesses</p>
+                    <div class="pricing-price">
+                        <span class="amount">$399</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <p class="pricing-description"><strong>24/7 human-powered dispatch service.</strong> Every after-hours call is answered by a trained dispatcher, triaged for severity, and instantly routed to your on-call technician.</p>
+                    <ul class="pricing-features">
+                        <li><span class="icon check">✓</span> All AI Lead Agent Features (Optional)</li>
+                        <li><span class="icon check">✓</span> 24/7 Live Call Answering & Triage</li>
+                        <li><span class="icon check">✓</span> Emergency Escalation Alerts (Text & Email)</li>
+                        <li><span class="icon check">✓</span> On-Call Routing Setup (Up to 3 Techs)</li>
+                        <li><span class="icon check">✓</span> Custom Emergency Scripts & Protocols</li>
+                        <li><span class="icon check">✓</span> Priority Onboarding & Testing</li>
+                        <li><span class="icon check">✓</span> 1 Monthly Script Revision</li>
+                        <li><span class="icon check">✓</span> CRM & Calendar Integration Ready</li>
+                        <li><span class="icon check">✓</span> Dedicated Dispatch Team + Full Accountability Logs</li>
+                    </ul>
+                    <button class="btn-primary" onclick="window.location.href='https://app.nightshiftdispatch.com/en/billing/stripe/subscription/checkout/session/?purchase_type=package&plan_key=pro&stripe_price_id=price_1SPBXOEfE4J1ZIOg7SD09CmS&billing_cycle=month'">Start Your 7-Day Free Trial</button>
+                    <p class="pricing-note">Discounts for quarterly and yearly plans!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container" style="text-align: center;">
+            <h2>Ready to Stop Losing Emergency Revenue?</h2>
+            <p>Try Night Shift Dispatch free for 7 days. No credit card required. See how we can transform your after-hours operations.</p>
+            <button class="btn-primary" onclick="window.location.href='https://app.nightshiftdispatch.com/en/billing/stripe/subscription/checkout/session/?purchase_type=package&plan_key=pro&stripe_price_id=price_1SPBXOEfE4J1ZIOg7SD09CmS&billing_cycle=month'">Start Your Free 7-Day Trial Now</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Night Shift Dispatch</h4>
+                    <p>24/7 After-Hours Dispatch for Trades</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#how">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#privacy">Privacy</a></li>
+                        <li><a href="#terms">Terms</a></li>
+                        <li><a href="#disclaimer">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Night Shift Dispatch by Trinity Sales & Management. All rights reserved.</p>
+                <p><strong>Disclaimer:</strong> This product is not intended for use by any type of "life threatening" services that require immediate intervention such as hospitals, ambulances, or police.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
